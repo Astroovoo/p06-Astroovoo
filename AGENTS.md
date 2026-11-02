@@ -30,7 +30,7 @@ course/thumbor.conf uses the file loader with course/images as its root. course/
 
 ## Trace paths
 
-The build run writes its trace to course/trace-build.jsonl. This file is the one owner of that path. No other file defines it. Each issue's branch carries its own trace. The review is yours: you write it on the pull request page, and the harness never posts it.
+The build run writes its trace to course/trace-build.jsonl. This file is the one owner of that path. No other file defines it. Each issue's branch carries its own trace. The harness you are running writes that file itself as you work, so it shows as changed in git status and git diff: it is not a stray change. Keep it, and commit it with the fix and the test; never restore, stash or discard it. The review is yours: you write it on the pull request page, and the harness never posts it.
 
 ## Conventions
 
