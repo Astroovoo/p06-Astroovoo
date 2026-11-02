@@ -30,7 +30,7 @@ course/thumbor.conf uses the file loader with course/images as its root. course/
 
 ## Trace paths
 
-The build run writes its trace to course/trace-build.jsonl. The review run writes its trace to course/trace-review.jsonl. This file is the one owner of those two paths. No other file defines them. Each issue's branch carries its own pair.
+The build run writes its trace to course/trace-build.jsonl. This file is the one owner of that path. No other file defines it. Each issue's branch carries its own trace. The review is yours: you write it on the pull request page, and the harness never posts it.
 
 ## Conventions
 

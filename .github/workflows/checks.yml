@@ -3,10 +3,9 @@
 #   existing suite at head      the whole test suite passes with your change
 #   added test at head          the test file your pull request adds passes
 #   added test fails at base    that same test file fails without your change
-#   course files on the branch  reports the course files and the changed
-#                               source files; it never fails the pull request,
-#                               because the review trace lands after the pull
-#                               request opens
+#   course files on the branch  reports the build trace and the changed
+#                               source files; it only reports and never fails
+#                               the pull request
 #
 # Staff run the same logic without GitHub with run_checks_locally.sh.
 
@@ -136,15 +135,9 @@ jobs:
           fetch-depth: 0
       - name: Report the course files and the changed source files
         run: |
-          for f in course/trace-build.jsonl course/trace-review.jsonl course/pile.md; do
+          for f in course/trace-build.jsonl; do
             if [ -f "$f" ]; then echo "PASS $f present"; else echo "FAIL $f missing"; fi
           done
           changed=$(git diff --name-only origin/main...HEAD -- 'thumbor/' | grep -v '/tests/' || true)
-          count=$(printf '%s\n' "$changed" | sed '/^$/d' | wc -l | tr -d ' ')
           echo "Changed source files under thumbor/:"
           printf '%s\n' "$changed" | sed '/^$/d' | sed 's/^/  /'
-          if [ "$count" -ge 2 ]; then
-            echo "PASS $count source files under thumbor/ changed (at least two expected)"
-          else
-            echo "FAIL $count source files under thumbor/ changed (at least two expected)"
-          fi
