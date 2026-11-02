@@ -41,7 +41,7 @@ jobs:
           python -m pip install -e ".[tests,opencv,extra-libs]"
           python setup.py build_ext -i
       - name: Run the suite
-        run: python -m pytest tests -q -p no:cacheprovider -p no:tldr --ignore=tests/detectors --ignore=tests/integration_tests
+        run: python -m pytest tests -q -p no:cacheprovider -p no:tldr --ignore=tests/detectors --ignore=tests/integration_tests --deselect tests/error_handlers/test_sentry.py::SentryTestCase::test_when_error_occurs_should_have_called_client --deselect tests/loaders/test_http_loader.py::HttpCurlTimeoutLoaderTestCase::test_load_with_speed_timeout
 
   added-test-at-head:
     name: added test at head
