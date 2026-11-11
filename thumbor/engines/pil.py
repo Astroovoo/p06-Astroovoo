@@ -278,6 +278,13 @@ class Engine(BaseEngine):
                 )
                 self.image = self.image.quantize(method=quantize_method)
 
+                # Quantize keeps the palette alpha but not the GIF transparency
+                # index. Restore it for GIF output only.
+                if requested_extension == ".gif":
+                    palette_alphas = self.image.getpalette("RGBA")[3::4]
+                    if 0 in palette_alphas:
+                        self.image.info["transparency"] = palette_alphas.index(0)
+
         ext = requested_extension or self.get_default_extension()
 
         if ext in (".heic", ".heif") and not HAVE_HEIF:
